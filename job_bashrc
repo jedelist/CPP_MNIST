@@ -1,0 +1,16 @@
+#!bin/bash
+
+# Setting Environment Variables
+export PROJECT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+export DATA="${PROJECT_ROOT}/data"
+export INCLUDE="${PROJECT_ROOT}/include"
+export SRC="${PROJECT_ROOT}/src"
+
+# Setting up aliases for convenience
+alias root="cd ${PROJECT_ROOT}"
+alias data="cd ${DATA}"
+alias src="cd ${SRC}"
+alias include="cd ${INCLUDE}"
+
+# To Compile:
+# g++ -std=c++17 -Iinclude src/main.cpp src/mnist_loader.cpp -o mnist_loader
