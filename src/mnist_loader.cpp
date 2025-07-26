@@ -69,3 +69,22 @@ std::vector<MNISTSample> MNISTLoader::load_test(const std::string &data_dir) {
         data_dir + "/t10k-labels-idx1-ubyte"
     );
 }
+
+std::string MNISTLoader::get_data_dir() {
+    const char* env_dir = std::getenv("DATA");
+    std::cout << "Data Directory Path: " << env_dir << std::endl;
+    if (env_dir) return std::string(env_dir);
+    return "data";
+}
+
+void MNISTLoader::test_print(struct MNISTSample sample) {
+    const std::vector<float> image = sample.pixels;
+
+    for (int i = 0; i < ROW_LEN; i++) {
+        for (int j = 0; j < ROW_LEN; j++) {
+            float val = image[i * ROW_LEN + j] < 0.5f ? 0.0f : 1.0f;
+            std::cout << val << " ";
+        }
+        std::cout << std::endl;
+    }
+}
