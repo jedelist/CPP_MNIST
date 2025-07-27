@@ -1,0 +1,16 @@
+# CMake build artifacts
+/build/
+/bin/
+/CMakeFiles/
+CMakeCache.txt
+Makefile
+cmake_install.cmake
+install_manifest.txt
+
+# macOS Finder junk
+.DS_Store
+
+# Editor/IDE temp files
+*.swp
+*.user
+*.log

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# If -B flag is passed do a full CMake reconfigure
+if [ "$1" == "-B" ]; then
+    echo "[bld] Reconfiguring build system..."
+    cmake -S "$PROJECT_ROOT" -B "$BUILD" || { echo "CMake configure failed!"; exit 1; }
+fi
+
+# If no build directory is missing, create it
+if [ ! -d "$BUILD" ]; then
+    echo "[bld] Build folder missing! Creating Directory."
+    cmake -S "$PROJECT_ROOT" -B "$BUILD" || { echo "CMake configure failed!"; exit 1; }
+fi
+
+echo "[bld] Building..."
+cd "$BUILD" || { echo "Build directory not found!"; exit 1; }
+cmake --build . || { echo "Build failed!"; exit 1; }
