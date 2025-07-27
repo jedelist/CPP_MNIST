@@ -7,10 +7,8 @@ Makefile
 cmake_install.cmake
 install_manifest.txt
 
-# macOS Finder junk
-.DS_Store
-
-# Editor/IDE temp files
+# Editor temp files
 *.swp
 *.user
 *.log
+.DS_Store

@@ -5,12 +5,22 @@ export PROJECT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pw
 export DATA="${PROJECT_ROOT}/data"
 export INCLUDE="${PROJECT_ROOT}/include"
 export SRC="${PROJECT_ROOT}/src"
+export BUILD="${PROJECT_ROOT}/build"
+export APPS="${PROJECT_ROOT}/apps"
+export SCRIPTS="${PROJECT_ROOT}/scripts"
+export BIN="${PROJECT_ROOT}/bin"
 
 # Setting up aliases for convenience
 alias root="cd ${PROJECT_ROOT}"
 alias data="cd ${DATA}"
 alias src="cd ${SRC}"
 alias include="cd ${INCLUDE}"
+alias build="cd ${BUILD}"
+alias apps="cd ${APPS}"
+alias scripts="cd ${SCRIPTS}"
+alias bld="${SCRIPTS}/bld"
+alias bin="cd ${BIN}"
 
 # To Compile:
-# g++ -std=c++17 -Iinclude src/main.cpp src/mnist_loader.cpp -o mnist_loader
+# If no chances to CMake or new libraries: bld 
+# If full build needed: bld -b
