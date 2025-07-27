@@ -55,6 +55,8 @@ static std::vector<MNISTSample> load_pair(const std::string &image_path, const s
     return dataset;
 }
 
+/*********************************************************************/
+
 /* Public project-wide APIs for loading MNIST training and test data */
 std::vector<MNISTSample> MNISTLoader::load_training(const std::string &data_dir) {
     return load_pair(
@@ -87,4 +89,5 @@ void MNISTLoader::test_print(struct MNISTSample sample) {
         }
         std::cout << std::endl;
     }
+    std::cout << std::endl << "Label: " <<static_cast<unsigned int>(sample.label) << std::endl;
 }
