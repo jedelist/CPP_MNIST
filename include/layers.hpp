@@ -52,7 +52,7 @@ class ReLU : public Layer {
         Eigen::VectorXf mask;
 
         ReLU(int features);
-        std::vector<data_t> foward(const std::vector<data_t> &input) override;
+        std::vector<data_t> forward(const std::vector<data_t> &input) override;
         std::vector<data_t> backward(const std::vector<data_t> &grad_output) override; /* dReLU*/
 };
 
@@ -63,6 +63,6 @@ class CrossEntropyLoss {
 
     public:
         data_t forward(const std::vector<data_t> &softmax_output, uint8_t label);
-        std::vector<data_t> softmax(const std::vector<data_t> &input);
+        static std::vector<data_t> softmax(const std::vector<data_t> &input);
         std::vector<data_t> backward(const std::vector<data_t> &logits, uint8_t label);
 };

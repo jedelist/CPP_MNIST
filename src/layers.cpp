@@ -34,7 +34,7 @@ Linear::Linear(int in_features, int out_features) :
     }
 }
 
-std::vector<data_t> Linear::forward(const std::vector<data_t> &input) override {
+std::vector<data_t> Linear::forward(const std::vector<data_t> &input) {
 
     /* Convert vector to Eigen::Vector*/
     Eigen::VectorXf x = Eigen::Map<const Eigen::VectorXf>(input.data(), inSize);
@@ -48,7 +48,7 @@ std::vector<data_t> Linear::forward(const std::vector<data_t> &input) override {
     
 }
 
-std::vector<data_t> Linear::backward(const std::vector<data_t> &grad_output) override {
+std::vector<data_t> Linear::backward(const std::vector<data_t> &grad_output) {
     Eigen::VectorXf grad_out = Eigen::Map<const Eigen::VectorXf>(grad_output.data(), outSize);
 
     /* dI/dW = */
@@ -70,7 +70,7 @@ void Linear::update(float lr) {
 /* ReLU Constructor calling base constructor */
 ReLU::ReLU(int features) : Layer(features, features), mask(features) {}
 
-std::vector<data_t> ReLU::forward(const std::vector<data_t> &input) override {
+std::vector<data_t> ReLU::forward(const std::vector<data_t> &input) {
     Eigen::VectorXf x = Eigen::Map<const Eigen::VectorXf>(input.data(), inSize);
     
     /* Applies max(0.0f, x) to each element */
@@ -83,7 +83,7 @@ std::vector<data_t> ReLU::forward(const std::vector<data_t> &input) override {
     return output;
 }
 
-std::vector<data_t> ReLU::backward(const std::vector<data_t> &grad_output) override {
+std::vector<data_t> ReLU::backward(const std::vector<data_t> &grad_output) {
     Eigen::VectorXf grad_out = Eigen::Map<const Eigen::VectorXf>(grad_output.data(), outSize);
 
     /* dReLU = grad_out * mask */
@@ -103,11 +103,11 @@ std::vector<data_t> CrossEntropyLoss::softmax(const std::vector<data_t> &logits)
     Eigen::VectorXf out = exp_z.array() / exp_z.sum();
 
     std::vector<data_t> result(out.data(), out.data() + out.size());
-    return result
+    return result;
 }
 
 /* Cross Entropy Loss Forward */
-data_t forward(const std::vector<data_t> &logits, uint8_t label) {
+data_t CrossEntropyLoss::forward(const std::vector<data_t> &logits, uint8_t label) {
     Eigen::VectorXf z = Eigen::Map<const Eigen::VectorXf>(logits.data(), logits.size());
     
     /* Softmax with stability */
@@ -122,7 +122,7 @@ data_t forward(const std::vector<data_t> &logits, uint8_t label) {
     return -std::log(p_true + 1e-12f);  /* gotta avoid log(0) so Epsilon = 1e-12 */
 }
 
-std::vector<data_t> backward(const std::vector<data_t> &logits, uint8_t label) {
+std::vector<data_t> CrossEntropyLoss::backward(const std::vector<data_t> &logits, uint8_t label) {
     Eigen::VectorXf probs = Eigen::Map<const Eigen::VectorXf>(last_softmax.data(), last_softmax.size());
 
     /* dL/dlogits = softmax - 1 at index[label] */

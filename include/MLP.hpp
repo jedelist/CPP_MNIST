@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
-#include "layers.hpp>
+#include "layers.hpp"
 #include <cmath>
 #include <Eigen/Dense>
 #include <memory>
