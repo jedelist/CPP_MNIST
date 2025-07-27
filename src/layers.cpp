@@ -5,6 +5,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <random>
+#include <fstream>
 
 typedef float data_t;
 
@@ -67,6 +68,42 @@ void Linear::update(float lr) {
     b = b - lr * grad_b;
 }
 
+/* Saving trained model method */
+void Linear::save(std::ofstream& out) {
+    out << inSize << " " << outSize << "\n";
+    for (int i = 0; i < outSize; i++) {
+        for (int j = 0; j < inSize; j++) {
+            out << static_cast<float> (W(i, j)) << " ";
+        }
+        out << "\n";
+    }
+    for (int i = 0; i < outSize; i++) {
+        out << static_cast<float> (b(i)) << " ";
+    }
+    out << "\n";
+}
+
+/* Loading saved model */
+void Linear::load(std::ifstream& in) {
+    int in_s, out_s;
+    in >> in_s >> out_s;
+    if (in_s != inSize || out_s != outSize) {
+        throw std::runtime_error("Layer shape mismatch when loading model!");
+    }
+    for (int i = 0; i < outSize; i++) {
+        for (int j = 0; j < inSize; j++) {
+            float w_val;
+            in >> w_val;
+            W(i, j) = w_val;
+        }
+    }
+    for (int i = 0; i < outSize; i++) {
+        float b_val;
+        in >> b_val;
+        b(i) = b_val;
+    }
+}
+
 /* ReLU Constructor calling base constructor */
 ReLU::ReLU(int features) : Layer(features, features), mask(features) {}
 
@@ -122,7 +159,7 @@ data_t CrossEntropyLoss::forward(const std::vector<data_t> &logits, uint8_t labe
     return -std::log(p_true + 1e-12f);  /* gotta avoid log(0) so Epsilon = 1e-12 */
 }
 
-std::vector<data_t> CrossEntropyLoss::backward(const std::vector<data_t> &logits, uint8_t label) {
+std::vector<data_t> CrossEntropyLoss::backward(uint8_t label) {
     Eigen::VectorXf probs = Eigen::Map<const Eigen::VectorXf>(last_softmax.data(), last_softmax.size());
 
     /* dL/dlogits = softmax - 1 at index[label] */

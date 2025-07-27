@@ -3,10 +3,13 @@
 #include <cmath>
 #include <Eigen/Dense>
 #include <memory>
+#include <fstream>
 #include "MLP.hpp"
 #include "layers.hpp"
 
 typedef float data_t;
+
+MLP::MLP(float lr) : lr(lr) {};
 
 void MLP::add(Layer *layer) {
     /* Converts the raw pointer to unique_ptr and pushes to back of layers vector */
@@ -32,8 +35,50 @@ std::vector<data_t> MLP::backward(const std::vector<data_t>& grad_output) {
     return grad;
 }
 
+/* Calls all update methods in each layer */
 void MLP::update(float lr) {
     for (auto& layer: layers) {
         layer->update(lr);
     }
+}
+
+void MLP::save(const std::string& filename) const {
+    std::ofstream out(filename);
+    if (!out) throw std::runtime_error("Failed to open model file for saving!");
+
+    out << layers.size() << "\n"; // number of layers
+
+    for (auto& layer : layers) {
+        if (auto* lin = dynamic_cast<Linear*>(layer.get())) {
+            out << "Linear\n";
+            lin->save(out);
+        } else if (dynamic_cast<ReLU*>(layer.get())) {
+            out << "ReLU\n";
+            // no params to save
+        }
+    }
+    out.close();
+}
+
+void MLP::load(const std::string& filename) {
+    std::ifstream in(filename);
+    if (!in) throw std::runtime_error("Failed to open model file for loading!");
+
+    size_t num_layers;
+    in >> num_layers;
+    if (num_layers != layers.size()) {
+        throw std::runtime_error("Mismatch in number of layers when loading model!");
+    }
+
+    for (auto& layer : layers) {
+        std::string layer_type;
+        in >> layer_type;
+        if (layer_type == "Linear") {
+            auto* lin = dynamic_cast<Linear*>(layer.get());
+            lin->load(in);
+        } else if (layer_type == "ReLU") {
+            // nothing to load
+        }
+    }
+    in.close();
 }

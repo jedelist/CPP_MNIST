@@ -9,6 +9,7 @@ export BUILD="${PROJECT_ROOT}/build"
 export APPS="${PROJECT_ROOT}/apps"
 export SCRIPTS="${PROJECT_ROOT}/scripts"
 export BIN="${PROJECT_ROOT}/bin"
+export MODELS="${PROJECT_ROOT}/models}"
 
 # Setting up aliases for convenience
 alias root="cd ${PROJECT_ROOT}"
@@ -20,6 +21,7 @@ alias apps="cd ${APPS}"
 alias scripts="cd ${SCRIPTS}"
 alias bld="${SCRIPTS}/bld"
 alias bin="cd ${BIN}"
+alias models="cd ${MODELS}"
 
 # To Compile:
 # If no chances to CMake or new libraries: bld 

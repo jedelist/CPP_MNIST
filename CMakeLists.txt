@@ -21,9 +21,10 @@ file(GLOB CORE_SOURCES
     ${SRC_DIR}/*.cpp
 )
 
+# ========== Add Internal Core Library ========== #
 add_library(mlp_core ${CORE_SOURCES})
 
-# Link Eigen to the core library
+# ========== Link Libraries to the Internal Core Lobrary ========== #
 target_link_libraries(mlp_core PUBLIC Eigen3::Eigen)
 
 # Also expose headers
@@ -33,6 +34,10 @@ target_include_directories(mlp_core PUBLIC ${INCLUDE_DIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)   # Set executables to live in bin/
 add_executable(main ${APPS_DIR}/main.cpp)
 target_link_libraries(main PRIVATE mlp_core)
+
+add_executable(trainMLP ${APPS_DIR}/trainMLP.cpp)
+target_link_libraries(trainMLP PRIVATE mlp_core)
+
 
 # ========== Add when finished with test and train ========== #
 # add_executable(train ${APPS_DIR}/train_main.cpp)

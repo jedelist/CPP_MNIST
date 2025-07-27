@@ -60,16 +60,12 @@ static std::vector<MNISTSample> load_pair(const std::string &image_path, const s
 /* Public project-wide APIs for loading MNIST training and test data */
 std::vector<MNISTSample> MNISTLoader::load_training(const std::string &data_dir) {
     return load_pair(
-        data_dir + "/train-images-idx3-ubyte",
-        data_dir + "/train-labels-idx1-ubyte"
-    );
+        data_dir + "/train-images-idx3-ubyte", data_dir + "/train-labels-idx1-ubyte");
 }
 
 std::vector<MNISTSample> MNISTLoader::load_test(const std::string &data_dir) {
     return load_pair(
-        data_dir + "/t10k-images-idx3-ubyte",
-        data_dir + "/t10k-labels-idx1-ubyte"
-    );
+        data_dir + "/t10k-images-idx3-ubyte", data_dir + "/t10k-labels-idx1-ubyte");
 }
 
 std::string MNISTLoader::get_data_dir() {

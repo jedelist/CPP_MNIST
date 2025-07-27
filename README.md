@@ -1,7 +1,19 @@
 # CPP_MNIST
 
-To Compile, run from project root:
+First, source the bash profile to set environment variables and aliases:
 
 ```bash
-g++ -std=c++17 -Iinclude src/main.cpp src/mnist_loader.cpp -o mnist_loader
+source job_bashrc
+```
+
+To do a Full Build, run from project root:
+
+```bash
+bld -B
+```
+
+To Build only changed files, run from project root:
+
+```bash
+bld
 ```
