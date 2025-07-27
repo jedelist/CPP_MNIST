@@ -49,7 +49,20 @@ class Linear : public Layer {
 
 class ReLU : public Layer {
     public:
-        ReLU(int in_features, int out_features);
-        std::vector<float> foward(std::vector{} &input) override;
-        std::vector<float> backward(std::vector{} &input) override; /* dReLU*/
+        Eigen::VectorXf mask;
+
+        ReLU(int features);
+        std::vector<data_t> foward(const std::vector<data_t> &input) override;
+        std::vector<data_t> backward(const std::vector<data_t> &grad_output) override; /* dReLU*/
+};
+
+/* Cross Entropy Loss declared. Did not have it as a layer */
+class CrossEntropyLoss {
+    private:
+        std::vector<data_t> last_softmax;
+
+    public:
+        data_t forward(const std::vector<data_t> &softmax_output, uint8_t label);
+        std::vector<data_t> softmax(const std::vector<data_t> &input);
+        std::vector<data_t> backward(const std::vector<data_t> &logits, uint8_t label);
 };
