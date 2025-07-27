@@ -84,7 +84,7 @@ void MNISTLoader::test_print(struct MNISTSample sample) {
 
     for (int i = 0; i < ROW_LEN; i++) {
         for (int j = 0; j < ROW_LEN; j++) {
-            float val = image[i * ROW_LEN + j] < 0.5f ? 0.0f : 1.0f;
+            char val = image[i * ROW_LEN + j] < 0.5f ? '.' : '#';
             std::cout << val << " ";
         }
         std::cout << std::endl;
