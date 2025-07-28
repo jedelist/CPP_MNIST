@@ -17,3 +17,9 @@ To Build only changed files, run from project root:
 ```bash
 bld
 ```
+
+To train MLP: First build, then run: 
+
+```bash
+./bin/trainMLP
+```

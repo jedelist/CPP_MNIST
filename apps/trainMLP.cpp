@@ -3,6 +3,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <string>
+#include <fstream>
 #include "MLP.hpp"
 #include "layers.hpp"
 #include "mnist_loader.hpp"
@@ -19,7 +20,7 @@ int main (int argc, char **argv) {
     std::vector<MNISTSample> train_dataset = MNISTLoader::load_training(MNISTLoader::get_data_dir());
 
     /* Initialize MLP model */
-    float lr = 0.01f;
+    float lr = 0.0001f;
     MLP model = MLP(lr);
 
     /* Initialize Layers of the MLP model */
@@ -42,8 +43,15 @@ int main (int argc, char **argv) {
 
     trainer.train(train_dataset, EPOCHS, lr);
 
+
+    const char* models = std::getenv("MODELS");
+    if (!models) {
+        std::cerr << "ERROR: MODELS env var not set!\n";
+    return 0;
+}
     /* Save trained model */
-    model.save("../models/model1.txt");
+    std::string save_path = std::string(models) + "/model1.txt";
+    model.save(save_path);
 
     return 0;
 }
