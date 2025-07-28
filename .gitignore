@@ -11,4 +11,5 @@ install_manifest.txt
 *.swp
 *.user
 *.log
+*.txt
 .DS_Store
