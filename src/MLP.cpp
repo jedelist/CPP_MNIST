@@ -3,6 +3,7 @@
 #include <cmath>
 #include <Eigen/Dense>
 #include <memory>
+#include <algorithm>
 #include <fstream>
 #include "MLP.hpp"
 #include "layers.hpp"
@@ -81,4 +82,16 @@ void MLP::load(const std::string& filename) {
         }
     }
     in.close();
+}
+
+/* Function to Predict or run inference */
+int MLP::predict(const std::vector<data_t> & input) {
+    std::vector<data_t> logits = forward(input);
+    std::vector<data_t> output = CrossEntropyLoss::softmax(logits);
+
+    /* Find index of the max element */
+    auto max_it = std::max_element(output.begin(), output.end());
+    int index_of_max = std::distance(output.begin(), max_it);
+
+    return index_of_max;
 }

@@ -37,6 +37,8 @@ target_link_libraries(main PRIVATE mlp_core)
 
 add_executable(trainMLP ${APPS_DIR}/trainMLP.cpp)
 target_link_libraries(trainMLP PRIVATE mlp_core)
+add_executable(testMLP ${APPS_DIR}/testMLP.cpp)
+target_link_libraries(testMLP PRIVATE mlp_core)
 
 
 # ========== Add when finished with test and train ========== #

@@ -21,4 +21,5 @@ class MLP {
         void update(float lr);
         void save(const std::string& filename) const;
         void load(const std::string& filename);
+        int predict(const std::vector<data_t> & input); /* Returns int of prediction */
 };
