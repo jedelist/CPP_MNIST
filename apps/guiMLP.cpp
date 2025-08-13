@@ -28,7 +28,7 @@ int main(int argc, char ** argv) {
 
     sf::Font font;
     if (!font.loadFromFile(gui::font_path)) {
-        std::cerr << "Failed to load font from path \n";
+        std::cerr << "Failed to load font from " << gui::font_path << std::endl;
         return 1;
     }
 
@@ -36,16 +36,19 @@ int main(int argc, char ** argv) {
     predict_text.setFillColor(sf::Color::Black);
     predict_text.setPosition(gui::WINDOW_WIDTH / 2 - 40, gui::CANVAS_SIZE + 10);
 
+    /* Predict button settings */
     sf::RectangleShape predict_button(sf::Vector2f(100, 40));
     predict_button.setFillColor(sf::Color(200, 200, 200));
     predict_button.setOutlineThickness(2);
     predict_button.setOutlineColor(sf::Color::Black);
     predict_button.setPosition(gui::WINDOW_WIDTH / 2 - 50, gui::CANVAS_SIZE + 5);
 
+    /* Prediction text for model output */
     sf::Text result_text("", font, 24);
     result_text.setFillColor(sf::Color::Black);
     result_text.setPosition(10, gui::CANVAS_SIZE + 10);
 
+    /* Clear button settings */
     sf::RectangleShape clearButton(sf::Vector2f(gui::BUTTON_WIDTH, gui::BUTTON_HEIGHT));
     clearButton.setPosition(gui::CANVAS_SIZE - gui::BUTTON_WIDTH - 20, gui::BUTTON_Y);  // Right side
     clearButton.setFillColor(sf::Color(200, 100, 100));  // Red-ish
@@ -104,7 +107,7 @@ int main(int argc, char ** argv) {
             }
         }
 
-        /* Draw the buttons and text */
+        /* Draw buttons and text */
         window.draw(predict_button);
         window.draw(predict_text);
         window.draw(result_text);

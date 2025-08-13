@@ -51,11 +51,5 @@ add_executable(guiMLP ${APPS_DIR}/guiMLP.cpp)
 target_link_libraries(guiMLP PRIVATE mlp_core)
 target_link_libraries(guiMLP PRIVATE sfml-graphics sfml-window sfml-system)
 
-
-# ========== Add when finished with test and train ========== #
-# add_executable(train ${APPS_DIR}/train_main.cpp)
-# target_link_libraries(train PRIVATE mlp_core)
-#
 # add_executable(test ${APPS_DIR}/test_main.cpp)
 # target_link_libraries(test PRIVATE mlp_core)
-

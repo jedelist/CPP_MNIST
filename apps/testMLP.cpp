@@ -9,7 +9,7 @@
 #include "mnist_loader.hpp"
 #include "trainer.hpp"
 
-#define MODEL_NUM 1
+constexpr int MODEL_NUM = 1;
 
 int main(int argc, char ** argv) {
     float lr = 0.0001f;

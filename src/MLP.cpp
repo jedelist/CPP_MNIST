@@ -14,7 +14,7 @@ MLP::MLP(float lr) : lr(lr) {};
 
 void MLP::add(Layer *layer) {
     /* Converts the raw pointer to unique_ptr and pushes to back of layers vector */
-    layers.push_back(std::unique_ptr<Layer>(layer));
+    layers.emplace_back(std::unique_ptr<Layer>(layer));
 }
 
 std::vector<data_t> MLP::forward(const std::vector<data_t> &input) {
