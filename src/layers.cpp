@@ -63,6 +63,7 @@ std::vector<data_t> Linear::backward(const std::vector<data_t> &grad_output) {
     return grad_in;
 }
 
+/* GD update */
 void Linear::update(float lr) {
     W = W - lr * grad_W;
     b = b - lr * grad_b;

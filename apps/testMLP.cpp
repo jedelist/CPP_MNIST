@@ -11,7 +11,7 @@
 
 #define MODEL_NUM 1
 
-int main(){
+int main(int argc, char ** argv) {
     float lr = 0.0001f;
     int correct_count = 0;
     int wrong_count = 0;
@@ -35,6 +35,7 @@ int main(){
     std::vector<MNISTSample> test_dataset = MNISTLoader::load_test(MNISTLoader::get_data_dir());
     total_count = test_dataset.size();
 
+    /* Looping through test set and counting correct predictions */
     for (int i = 0; i < test_dataset.size(); i++) {
         int result = model.predict(test_dataset[i].pixels);
         if (result == static_cast<int>(test_dataset[i].label)) {
