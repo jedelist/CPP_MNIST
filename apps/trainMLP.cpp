@@ -1,18 +1,14 @@
 #include <iostream>
 #include <vector>
-#include <cmath>
 #include <cstdlib>
 #include <string>
-#include <fstream>
 #include "MLP.hpp"
 #include "layers.hpp"
 #include "mnist_loader.hpp"
 #include "trainer.hpp"
-
-#define EPOCHS 10
+#include "train_config.hpp"
 
 typedef float data_t;
-
 
 int main (int argc, char **argv) {
 
@@ -20,8 +16,7 @@ int main (int argc, char **argv) {
     std::vector<MNISTSample> train_dataset = MNISTLoader::load_training(MNISTLoader::get_data_dir());
 
     /* Initialize MLP model */
-    float lr = 0.0001f;
-    MLP model = MLP(lr);
+    MLP model = MLP(config::LR);
 
     /* Initialize Layers of the MLP model */
     Layer *input = new Linear(784, 512);
@@ -41,16 +36,20 @@ int main (int argc, char **argv) {
     CrossEntropyLoss loss_fn = CrossEntropyLoss();
     Trainer trainer = Trainer(model, loss_fn);
 
-    trainer.train(train_dataset, EPOCHS, lr);
+    std::cout << "Training Model " << config::MODEL_NUM << 
+    " which will be saved to $MODELS/model" << config::MODEL_NUM << ".txt" << std::endl;
+    trainer.train(train_dataset, config::EPOCHS, config::LR);
 
+    const char* models_dir = std::getenv("MODELS");
+    if (!models_dir) {
+        std::cerr << "ERROR: MODELS env var not set!\n Ensure you `source job_bashrc`. \n";
+        return 0;
+    }
 
-    const char* models = std::getenv("MODELS");
-    if (!models) {
-        std::cerr << "ERROR: MODELS env var not set!\n";
-    return 0;
-}
     /* Save trained model */
-    std::string save_path = std::string(models) + "/model1.txt";
+    //const char* MODEL_NUM = argv[1];
+    std::string save_path = std::string(models_dir) + "/model" + std::to_string(config::MODEL_NUM) + ".txt";
+
     model.save(save_path);
 
     return 0;

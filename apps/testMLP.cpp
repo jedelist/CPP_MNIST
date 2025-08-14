@@ -1,15 +1,12 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
-#include <cstdlib>
 #include <string>
-#include <fstream>
 #include "MLP.hpp"
 #include "layers.hpp"
 #include "mnist_loader.hpp"
 #include "trainer.hpp"
-
-constexpr int MODEL_NUM = 1;
+#include "train_config.hpp"
 
 int main(int argc, char ** argv) {
     float lr = 0.0001f;
@@ -19,8 +16,9 @@ int main(int argc, char ** argv) {
     float accuracy;
 
     const char* models_dir = std::getenv("MODELS");
+    const char* MODEL_NUM = argv[1];
+    std::string loaded_model = std::string(models_dir) + "/model" + std::string(MODEL_NUM) + ".txt";
 
-    std::string loaded_model = std::string(models_dir) + "/model" + std::to_string(MODEL_NUM) + ".txt";
     MLP model(lr);
 
     /* Match the model architecture to the model that was saved: */

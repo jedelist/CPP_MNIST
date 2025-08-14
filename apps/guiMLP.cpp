@@ -7,6 +7,7 @@
 #include "trainer.hpp"
 #include "gui_config.hpp"
 #include "gui_helpers.hpp"
+#include "train_config.hpp"
 
 int main(int argc, char ** argv) {
     sf::RenderWindow window(sf::VideoMode(gui::WINDOW_WIDTH, gui::WINDOW_HEIGHT), "Draw a Digit (28x28)");
@@ -14,9 +15,10 @@ int main(int argc, char ** argv) {
     /* Create 28x28 grid of false pixels */
     std::vector<std::vector<bool>> grid(gui::GRID_SIZE, std::vector<bool>(gui::GRID_SIZE, false));
 
-    /* Handle model and load weights */
+    /* Load model/weights */
     const char* models_dir = std::getenv("MODELS");
-    std::string loaded_model = std::string(models_dir) + "/model1.txt";
+    const char* MODEL_NUM = argv[1];
+    std::string loaded_model = std::string(models_dir) + "/model" + std::string(MODEL_NUM) + ".txt";
     float lr = 0.0001f;
     MLP model(lr);
     model.add(new Linear(784, 512));
