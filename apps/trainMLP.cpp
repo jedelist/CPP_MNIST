@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <cstdlib>
 #include <string>
 #include "MLP.hpp"
 #include "layers.hpp"

@@ -6,7 +6,7 @@ if [ "$1" == "-B" ]; then
     cmake -S "$PROJECT_ROOT" -B "$BUILD" || { echo "CMake configure failed!"; exit 1; }
 fi
 
-# If no build directory is missing, create it
+# If build directory is missing, create it
 if [ ! -d "$BUILD" ]; then
     echo "[bld] Build folder missing! Creating Directory."
     cmake -S "$PROJECT_ROOT" -B "$BUILD" || { echo "CMake configure failed!"; exit 1; }
